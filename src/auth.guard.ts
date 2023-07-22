@@ -2,6 +2,7 @@ import { Injectable, CanActivate, ExecutionContext ,UnauthorizedException} from 
 import { Observable } from 'rxjs';
 import {jwtConstants} from './CONSTANTS';
 import { JwtService } from '@nestjs/jwt';
+import {GlobalService} from './model/authiruzation.model'
 @Injectable()
 export class AuthGuard implements CanActivate {
 
@@ -16,7 +17,6 @@ export class AuthGuard implements CanActivate {
   ): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
     const token = this.extractTokenFromHeader(request);
-    console.log(token);
     if (!token) {
       throw new UnauthorizedException();
     }
@@ -27,10 +27,10 @@ export class AuthGuard implements CanActivate {
           secret: jwtConstants.secret
         }
       );
-      // 💡 We're assigning the payload to the request object here
-      // so that we can access it in our route handlers
       request['user'] = payload;
-      console.log(request['user']);
+      //#region set globalvariable
+      GlobalService.token = token;
+      //#endregion
     } catch {
       throw new UnauthorizedException();
     }

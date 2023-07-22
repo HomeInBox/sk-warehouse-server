@@ -1,8 +1,11 @@
-import { Controller,Get,Post,Req,Body,HttpCode } from '@nestjs/common';
-import {reqLogin,resLogin} from '../../model/authiruzation.model'
-import { request } from 'http';
-//import {AuthiruzationApiService} from './authiruzation.service'
+import { Controller,Get,Post,Req,Body,HttpCode ,UseFilters,InternalServerErrorException,NotFoundException,HttpStatus} from '@nestjs/common';
+import {reqLogin,resLogin,reqCreateUser} from '../../model/authiruzation.model'
+import {ResponseModel} from '../../model/Response.model'
+import { HttpExceptionFilter } from '../../http-excepion.filter';
 import {AuthiruzationService} from '../../Service/authenService/auth.service'
+
+
+@UseFilters(HttpExceptionFilter)
 @Controller('authorization')
 export class AuthorizationController {
 constructor(
@@ -11,10 +14,17 @@ constructor(
 
 }
     @Post('login')
-    @HttpCode(200)
+    @HttpCode(HttpStatus.OK)
     async getHello(@Body() request: reqLogin){
-        let token = this._AuthiruzationService.GenerateToken(request);
-        return token;
+            let token = this._AuthiruzationService.GenerateToken(request);
+            return token;
+    }
+
+    @Post('createuser')
+    @HttpCode(HttpStatus.OK)
+    async CreateUser(@Body() request: reqCreateUser):Promise<ResponseModel<reqCreateUser>>{
+        let result = this._AuthiruzationService.CreateUser(request);
+        return result;
     }
 
 

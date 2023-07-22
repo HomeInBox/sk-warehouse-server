@@ -1,9 +1,11 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { HttpExceptionFilter} from './http-excepion.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.useGlobalFilters(new HttpExceptionFilter());
 
   const config = new DocumentBuilder()
     .setTitle('SK WareHouse API')
@@ -18,11 +20,11 @@ async function bootstrap() {
       description: 'Enter JWT token',
       in: 'header',
     },
-    'JWT-auth', /* This name here is important for matching up with @ApiBearerAuth() in your controller!*/)
+    'JWT-auth',)
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 
-  await app.listen(3000);
+  await app.listen(process.env.PORT ? parseInt(process.env.PORT) : 3000);
 }
 bootstrap();
