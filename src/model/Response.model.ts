@@ -1,12 +1,20 @@
 import { Post, Res, HttpStatus } from '@nestjs/common';
 
-export class ResponseModel<T>{
-    constructor(){
-        this.IsSuccess = false;
-        this.Status = HttpStatus.BAD_REQUEST;
-    }
+export interface IResponse<T>{
     Error:string;
     IsSuccess:boolean;
     Status:number;
     Data:T
+}
+
+export class ResponseModel{
+   static Success<T>(data:T){
+        let result : IResponse<T> = {
+            Error:null,
+            IsSuccess : true,
+            Data : data,
+            Status : HttpStatus.OK,
+        }
+        return result;
+    }
 }

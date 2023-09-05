@@ -32,7 +32,7 @@ export class Extention{
         return day+'/'+month+'/'+year +' '+ hour+':'+munite
     }
 
-    isNullOrEmtry(obj):boolean
+    isNotNullOrEmtry(obj):boolean
     {
         if(obj && obj !== 'null' && obj !== null && obj !== 'undefined' && obj !== undefined){
             return true;

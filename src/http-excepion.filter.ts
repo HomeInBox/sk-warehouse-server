@@ -1,6 +1,6 @@
 import { ExceptionFilter, Catch, ArgumentsHost, HttpException ,HttpStatus} from '@nestjs/common';
 import { Request, Response } from 'express';
-import {ResponseModel} from './model/Response.model'
+import {IResponse} from './model/Response.model'
 
 
 @Catch(HttpException)
@@ -11,7 +11,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const request = ctx.getRequest<Request>();
     const status = exception.getStatus();
     
-    let ResponseResult : ResponseModel<null> = {
+    let ResponseResult : IResponse<null> = {
       Error : exception.message,
       Data : null,
       IsSuccess : false,

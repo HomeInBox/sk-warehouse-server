@@ -16,6 +16,17 @@ export class reqCreateUser{
     Email: string;
     @ApiProperty()
     Phonenumber: string;
+    @ApiProperty()
+    Name: string;
+}
+
+export class reqUpdateUser{
+    @ApiProperty()
+    Email: string;
+    @ApiProperty()
+    Phonenumber: string;
+    @ApiProperty()
+    Name: string;
 }
 
 export class resLogin{
