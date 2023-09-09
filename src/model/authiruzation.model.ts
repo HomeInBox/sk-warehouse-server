@@ -31,6 +31,7 @@ export class reqUpdateUser{
 
 export class resLogin{
     token:string;
+    name:string;
 }
 
 export class UserDetail {

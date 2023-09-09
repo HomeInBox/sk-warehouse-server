@@ -6,7 +6,7 @@ import { HttpExceptionFilter} from './http-excepion.filter';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalFilters(new HttpExceptionFilter());
-
+  app.enableCors();
   const config = new DocumentBuilder()
     .setTitle('SK WareHouse API')
     .setDescription('The SK WareHouse API description')

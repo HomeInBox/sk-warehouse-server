@@ -1,7 +1,7 @@
 import { Injectable,InternalServerErrorException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Model } from 'mongoose';
-import {reqLogin,reqCreateUser,UserDetail,reqUpdateUser} from '../../model/authiruzation.model'
+import {reqLogin,reqCreateUser,UserDetail,reqUpdateUser,resLogin} from '../../model/authiruzation.model'
 import { InjectModel } from '@nestjs/mongoose';
 import { USER_SCHEMA_DOCUMENT,USER_SCHEMA_MODEL} from '../../mongoDB/schema/user.schema';
 import {Extention} from '../Extention.service'
@@ -19,9 +19,9 @@ export class AuthiruzationService{
         
         ) {}
 
-    async GenerateToken(req:reqLogin){
+    async GenerateToken(req:reqLogin):Promise<IResponse<resLogin>>{
         try{
-            let token; 
+            let token: resLogin; 
             let User = await this._USER_SCHEMA_DOCUMENT.findOne({USERNAME:req.username,PASSWORD:req.password}).exec();
             if(User != null){
                 let HasUser :UserDetail = {
@@ -31,9 +31,13 @@ export class AuthiruzationService{
                     Phonenumber : User.PHONENUMBER,
                     Name : User.NAME
                 }
-                token =  await this._JwtService.signAsync(HasUser);
+
+                token  = {
+                    token : await this._JwtService.signAsync(HasUser),
+                    name : HasUser.Name
+                }
             }
-            return token;
+            return ResponseModel.Success<resLogin>(token);
         }catch(ex){
             throw new InternalServerErrorException(ex);
         }

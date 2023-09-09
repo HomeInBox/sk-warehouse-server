@@ -15,14 +15,14 @@ constructor(
 ){
 
 }
-    @Post('login')
+    @Post('api/login')
     @HttpCode(HttpStatus.OK)
-    async getHello(@Body() request: reqLogin){
+    async getHello(@Body() request: reqLogin):Promise<IResponse<resLogin>>{
             let token = await this._AuthiruzationService.GenerateToken(request);
             return token;
     }
 
-    @Post('createuser')
+    @Post('api/createuser')
     @HttpCode(HttpStatus.OK)
     async CreateUser(@Body() request: reqCreateUser):Promise<IResponse<boolean>>{
         let result = await this._AuthiruzationService.CreateUser(request);
@@ -30,7 +30,7 @@ constructor(
     }
 
     @UseGuards(AuthGuard)
-    @Post('updateuser')
+    @Post('api/updateuser')
     @HttpCode(HttpStatus.OK)
     async UpdateUser(@Body() request: reqUpdateUser):Promise<IResponse<boolean>>{
         let result = await this._AuthiruzationService.UpdateUser(request);

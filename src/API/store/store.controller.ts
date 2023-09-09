@@ -14,13 +14,13 @@ export class StoreController {
 constructor(private _StoreService:StoreService)
 {}
 
- @Post('Create')
+ @Post('api/Create')
  async CreateStore(@Body() request: reqCreatestoreModel){
    let result = await this._StoreService.CreateStore(request);
     return result;
  }
 
- @Post('UploadFile')
+ @Post('api/UploadFile')
  async UploadFile(@Body() request: reqUploadFileModel){
    let result = await this._StoreService.UploadFile(request);
     return result;
