@@ -23,7 +23,8 @@ import { APP_FILTER } from '@nestjs/core';
     })
     ,ConfigModule.forRoot({
       isGlobal: true,
-      load:[config]
+      load:[config],
+      envFilePath:[`.env.develop.env`]
     })
     ,MongooseModule.forRootAsync({
       inject: [ConfigService],

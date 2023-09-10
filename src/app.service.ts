@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-
 @Injectable()
 export class AppService {
   constructor(
@@ -10,6 +9,7 @@ export class AppService {
   getHello(): string {
     let port = this._ConfigService.get<number>('port');
     let db = this._ConfigService.get<number>('DATABASE_URL');
-    return 'Hello World!' + db;
+    let env = this._ConfigService.get<number>('test');
+    return env + '|| Hello World!' + db;
   }
 }
